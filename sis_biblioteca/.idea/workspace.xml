@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="eb527d9f-265c-41a4-b2a4-28823a370f4f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-    </list>
+    <list default="true" id="eb527d9f-265c-41a4-b2a4-28823a370f4f" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,6 +15,7 @@
     <session id="1408549004">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
+          <entry key="project.closed" value="1" />
           <entry key="project.open.time.3" value="1" />
           <entry key="project.opened" value="1" />
         </counts>
@@ -45,35 +43,7 @@
     </session>
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/biblioteca/models.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="71">
-              <caret line="57" column="67" lean-forward="true" selection-start-line="57" selection-start-column="67" selection-end-line="57" selection-end-column="67" />
-              <folding>
-                <element signature="e#24#63#0" expanded="true" />
-                <marker date="1537910999696" expanded="true" signature="570:576" ph="..." />
-                <marker date="1537910999696" expanded="true" signature="1839:1840" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/biblioteca/admin.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="653">
-              <caret line="39" column="44" selection-start-line="39" selection-start-column="44" selection-end-line="39" selection-end-column="44" />
-              <folding>
-                <element signature="e#24#63#0" expanded="true" />
-                <marker date="1537911264575" expanded="true" signature="228:233" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -179,7 +149,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="720" height="877" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info id="Favorites" side_tool="true" />
       <window_info content_ui="combo" id="Project" order="0" weight="0.27876106" />
@@ -248,25 +217,25 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/biblioteca/admin.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="194">
+          <caret line="14" column="23" lean-forward="true" selection-start-line="14" selection-start-column="23" selection-end-line="14" selection-end-column="23" />
+          <folding>
+            <element signature="e#24#63#0" expanded="true" />
+            <marker date="1537911264575" expanded="true" signature="228:233" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/biblioteca/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="71">
+        <state relative-caret-position="551">
           <caret line="57" column="67" lean-forward="true" selection-start-line="57" selection-start-column="67" selection-end-line="57" selection-end-column="67" />
           <folding>
             <element signature="e#24#63#0" expanded="true" />
             <marker date="1537910999696" expanded="true" signature="570:576" ph="..." />
             <marker date="1537910999696" expanded="true" signature="1839:1840" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/biblioteca/admin.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="653">
-          <caret line="39" column="44" selection-start-line="39" selection-start-column="44" selection-end-line="39" selection-end-column="44" />
-          <folding>
-            <element signature="e#24#63#0" expanded="true" />
-            <marker date="1537911264575" expanded="true" signature="228:233" ph="..." />
           </folding>
         </state>
       </provider>
