@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <table class="table table-sm table-bordered table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th class="text-center">#</th>
+                <th>Data do Empréstimo</th>
+                <th>Data Prevista para Devolução</th>
+                <th>Data da Devolução</th>
+                <th>Exemplar</th>
+                <th>Biblioteca</th>
+                <th>Status</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for emprestimo in emprestimos %}
+                <tr>
+                    <td class="text-center">{{ emprestimo.id }}</td>
+                    <td>{{ emprestimo.data_emprestimo|date }}</td>
+                    <td>{{ emprestimo.data_prevista_devolucao|date }}</td>
+                    <td>{{ emprestimo.data_devoluca|date|default:'-' }}</td>
+                    <td>{{ emprestimo.exemplar.titulo.nome }}</td>
+                    <td>{{ emprestimo.exemplar.biblioteca.nome }}</td>
+                    <td>
+                        {% if emprestimo.is_ativo %}
+                            <span class="badge badge-primary">Ativo</span>
+                        {% elif emprestimo.data_devolucao %}
+                            <span class="badge badge-success">Finalizado</span>
+                        {% elif empresto.em_atraso %}
+                            <span class="badge badge-danger">Em Atraso</span>
+                        {% endif %}
+                    </td>
+                    <td></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

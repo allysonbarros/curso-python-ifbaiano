@@ -1,0 +1,48 @@
+{% extends 'bootstrap4/bootstrap4.html' %}
+{% load bootstrap4 %}
+
+{% block bootstrap4_title %}{% block title %}SisBiblioteca{% endblock %}{% endblock %}
+
+{% block bootstrap4_content %}
+{% bootstrap_javascript jquery='full' %}
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">SisBiblioteca</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    {% if request.user.is_authenticated %}
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Bibliotecas</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Exemplares</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'emprestimos' %}">Empréstimos</a>
+        </li>
+      </ul>
+      <span class="navbar-text mr-4">
+        Bem vindo, {{ request.user }}!
+      </span>
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="btn btn-danger" href="{% url 'logoff' %}">Encerrar Sessão</a>
+        </li>
+      </ul>
+      {% endif %}
+    </div>
+</nav>
+
+<div class="container-fluid">
+  <h2 class="page-header mt-3 mb-4">{{ title }}</h2>
+  {% block content %}
+  {% endblock %}
+</div>
+{% endblock %}

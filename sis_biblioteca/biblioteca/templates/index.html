@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h5 class="page-header mt-3 mb-4">
+  Últimos Empréstimos
+</h5>
+
+<div class="row">
+{% for emprestimo in ultimos_emprestimos %}
+<div class="col">
+    <div class="card">
+        <div class="card-body">
+            <h6 class="card-subtitle mb-2 text-muted">
+              <small class="text-muted">{{ emprestimo.data_emprestimo|date }}</small>
+            </h6>
+            <h5 class="card-title">
+              {{ emprestimo.exemplar.titulo }}
+            </h5>
+            <h6 class="card-subtitle mb-2 text-muted">
+              {{ emprestimo.exemplar.biblioteca }}
+            </h6>
+            <a href="#" class="card-link">Detalhes</a>
+            <div class="float-right">
+                {% if emprestimo.is_ativo %}
+                  <span class="badge badge-primary">Ativo</span>
+                {% elif emprestimo.data_devolucao %}
+                  <span class="badge badge-success">Finalizado</span>
+                {% elif empresto.em_atraso %}
+                  <span class="badge badge-danger">Em Atraso</span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+</div>
+
+<h5 class="page-header mt-3 mb-4">
+  Empréstimos próximos do vencimento
+</h5>
+
+<div class="row">
+  {% for emprestimo in emprestimos_a_vencer %}
+  <div class="col">
+      <div class="card">
+          <div class="card-body">
+              <h6 class="card-subtitle mb-2 text-muted">
+                <span class="badge badge-danger">
+                  {{ emprestimo.data_prevista_devolucao|date }}
+                </span>
+              </h6>
+              <h5 class="card-title">
+                {{ emprestimo.exemplar.titulo }}
+              </h5>
+              <h6 class="card-subtitle mb-2 text-muted">
+                {{ emprestimo.exemplar.biblioteca }}
+              </h6>
+              <a href="#" class="card-link">Detalhes</a>
+              {% if emprestimo.is_ativo %}
+                <a href="{% url 'renovar_emprestimo' emprestimo.id %}" class="card-link">Renovar</a>
+              {% endif %}
+          </div>
+      </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock %}
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+    <!--<meta charset="UTF-8">-->
+    <!--<title>Emprestimos Ativos</title>-->
+<!--</head>-->
+<!--<body>-->
+    <!--<h1>Sistema de Biblioteca</h1>-->
+    <!--{% if request.user.is_authenticated %}-->
+        <!--<h2>Bem vindo, {{ request.user }}!</h2>-->
+
+        <!--<p>-->
+            <!--<a href="/biblioteca/logoff/">Sair do Sistema</a>-->
+        <!--</p>-->
+    <!--{% else %}-->
+        <!--<h2>Bem vindo, visitante!</h2>-->
+
+        <!--<form action="" method="post">-->
+            <!--{% csrf_token %}-->
+            <!--<div>-->
+                <!--{{ form.as_p }}-->
+            <!--</div>-->
+
+            <!--<div>-->
+                <!--<input type="submit" value="Autenticar" />-->
+            <!--</div>-->
+        <!--</form>-->
+
+
+        <!--&lt;!&ndash;<form action="/biblioteca/autenticar/" method="post">&ndash;&gt;-->
+            <!--&lt;!&ndash;{% csrf_token %}&ndash;&gt;-->
+
+            <!--&lt;!&ndash;<p>&ndash;&gt;-->
+                <!--&lt;!&ndash;<label for="usuario">Usuário:</label>&ndash;&gt;-->
+                <!--&lt;!&ndash;<input type="text" id="usuario" name="usuario" />&ndash;&gt;-->
+            <!--&lt;!&ndash;</p>&ndash;&gt;-->
+            <!--&lt;!&ndash;<p>&ndash;&gt;-->
+                <!--&lt;!&ndash;<label for="senha">Senha:</label>&ndash;&gt;-->
+                <!--&lt;!&ndash;<input type="password" id="senha" name="senha" />&ndash;&gt;-->
+            <!--&lt;!&ndash;</p>&ndash;&gt;-->
+            <!--&lt;!&ndash;<p>&ndash;&gt;-->
+                <!--&lt;!&ndash;<input type="submit" value="Autenticar">&ndash;&gt;-->
+            <!--&lt;!&ndash;</p>&ndash;&gt;-->
+        <!--&lt;!&ndash;</form>&ndash;&gt;-->
+    <!--{% endif %}-->
+<!--</body>-->
+<!--</html>-->
