@@ -8,20 +8,29 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.exceptions import ValidationError
+from django.core.mail import send_mail, EmailMessage
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidden
 from django.shortcuts import render, redirect, get_object_or_404
 
 from biblioteca.forms import LoginForm, PessoaFisicaForm
-from biblioteca.models import Emprestimo
+from biblioteca.models import Emprestimo, Exemplar
+
 
 @login_required(login_url='/login/')
 def index(request):
-    if request.user.is_authenticated() and not request.user.groups.filter(name='Usuario'):
-        return HttpResponseForbidden('Acesso Negado')
-
     title = 'Dashboard'
-    ultimos_emprestimos = Emprestimo.objects.filter(usuario__username=request.user.username)[:5]
-    emprestimos_a_vencer = Emprestimo.vencem_na_proxima_semana.filter(usuario__username=request.user.username).order_by('data_prevista_devolucao')[:5]
+
+    eh_admistrador = request.user.groups.filter(name='Administrador').exists()
+    eh_bibliotecario = request.user.groups.filter(name='Bibliotecario').exists()
+    eh_atendente = request.user.groups.filter(name='Atendente').exists()
+    eh_usuario = request.user.groups.filter(name='Usuario').exists()
+
+    if eh_usuario:
+        ultimos_emprestimos = Emprestimo.objects.filter(usuario__username=request.user.username)[:5]
+        emprestimos_a_vencer = Emprestimo.vencem_na_proxima_semana.filter(usuario__username=request.user.username).order_by('data_prevista_devolucao')[:5]
+
+    if eh_bibliotecario:
+        ultimos_exemplares = Exemplar.objects.all().order_by('data_aquisicao')[:10]
     return render(request, 'index.html', locals())
 
 def form_login(request):
@@ -77,8 +86,38 @@ def renovar_emprestimo(request, id):
     if obj.usuario.username != request.user.username:
         return HttpResponse('Acesso Negado.', status=403)
 
-    obj.data_prevista_devolucao = data_prevista_devolucao = datetime.datetime.today() + timedelta(days=7)
+    obj.data_prevista_devolucao = datetime.datetime.today() + timedelta(days=7)
     obj.save()
+
+    # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+    send_mail(
+        'SisBiblioteca - Renovação de Empréstimo',
+        '''
+        Olá {nome}, sua renovação foi realizada com sucesso!
+
+        A data para a devolução do exemplar é {data}.
+        '''.format(
+            nome=obj.usuario,
+            data=obj.data_prevista_devolucao.strftime("%d/%m/%Y")
+        ),
+        'sisbiblioteca@ifbaiano.edu.br',
+        ['a@a.com'],
+        fail_silently=True
+    )
+
+    # EmailMessage(
+    #     'SisBiblioteca - Renovação de Empréstimo',
+    #     '''
+    #     Olá {nome}, sua renovação foi realizada com sucesso!
+    #
+    #     A data para a devolução do exemplar é {data}.
+    #     '''.format(nome=obj.usuario,data=obj.data_prevista_devolucao.strftime("%d/%m/%Y")),
+    #     'sisbiblioteca@ifbaiano.edu.br',
+    #     ['a@a.com'],
+    #     ['gti@ifbaiano.edu.br'],
+    #     reply_to=['bibliotecas@ifbaiano.edu.br'],
+    # ).send(fail_silently=True)
 
     messages.success(request, 'O empréstimo foi renovado com sucesso.')
     return redirect('/biblioteca/emprestimos/')

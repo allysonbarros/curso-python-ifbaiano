@@ -1,0 +1,24 @@
+<h5 class="page-header mt-3 mb-4">
+  Últimos Exemplares Adquiridos
+</h5>
+
+<div class="row">
+{% for exemplar in ultimos_exemplares %}
+<div class="col">
+    <div class="card">
+        <div class="card-body">
+            <h6 class="card-subtitle mb-2 text-muted">
+              <small class="text-muted">{{ exemplar.data_aquisicao|date }}</small>
+            </h6>
+            <h5 class="card-title">
+              {{ exemplar.titulo }}
+            </h5>
+            <h6 class="card-subtitle mb-2 text-muted">
+              {{ exemplar.biblioteca }}
+            </h6>
+            <a href="#" class="card-link">Detalhes</a>
+        </div>
+    </div>
+</div>
+{% endfor %}
+</div>

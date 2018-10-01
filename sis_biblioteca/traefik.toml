@@ -1,0 +1,22 @@
+defaultEntryPoints = ["http", "https"]
+
+[web]
+address = ":8080"
+  [web.auth.basic]
+  users = ["admin:$apr1$esdrvS/1$v6FbgaWb8UG23zDEd79Nj/"]
+
+[entryPoints]
+  [entryPoints.http]
+  address = ":80"
+    [entryPoints.http.redirect]
+      entryPoint = "https"
+  [entryPoints.https]
+  address = ":443"
+    [entryPoints.https.tls]
+
+[acme]
+email = "contato@opendataprocessor.com"
+storage = "acme.json"
+entryPoint = "https"
+onHostRule = true
+onDemand = false

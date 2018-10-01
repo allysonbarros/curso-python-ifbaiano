@@ -1,0 +1,48 @@
+version: '2'
+
+networks:
+  proxy:
+    external: true
+  internal:
+    external: false
+
+services:
+  traefik:
+    image: traefik:1.5-alpine
+    container_name: traefik
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      - proxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./traefik.toml:/traefik.toml
+      - ./acme.json:/acme.json
+    labels:
+      - traefik.frontend.rule=Host:monitor.sisbiblioteca.local
+      - traefik.port=8080
+      - traefik.frontend.priority=2
+    command: --web --docker --docker.domain=docker.localhost --logLevel=INFO
+
+  web:
+    build: .
+    container_name: web
+    command: ./docker/run.sh
+    volumes:
+      - ./docker/local_settings.py:/app/sis_biblioteca/local_settings.py
+      - ./docker/deploy/static:/static/
+      - ./docker/deploy/media:/media/
+    expose:
+      - 8000
+    restart: always
+    labels:
+      - traefik.backend=nginx
+      - traefik.frontend.rule=Host:app.sisbiblioteca.local
+      - traefik.docker.network=proxy
+      - traefik.port=8000
+    networks:
+      - internal
+      - proxy
+  

@@ -1,5 +1,5 @@
 {% extends 'bootstrap4/bootstrap4.html' %}
-{% load bootstrap4 %}
+{% load bootstrap4 filters %}
 
 {% block bootstrap4_title %}{% block title %}SisBiblioteca{% endblock %}{% endblock %}
 
@@ -16,17 +16,23 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <a class="nav-link" href="#">Home</a>
+          <a class="nav-link" href="{% url 'index' %}">Home</a>
         </li>
+        {% if request.user|has_group:'Administrador' %}
         <li class="nav-item">
           <a class="nav-link" href="#">Bibliotecas</a>
         </li>
+        {% endif %}
+        {% if request.user|has_group:'Bibliotecario' %}
         <li class="nav-item">
           <a class="nav-link" href="#">Exemplares</a>
         </li>
+        {% endif %}
+        {% if request.user|has_group:'Usuario' %}
         <li class="nav-item">
           <a class="nav-link" href="{% url 'emprestimos' %}">Empréstimos</a>
         </li>
+        {% endif %}
       </ul>
       <span class="navbar-text mr-4">
         Bem vindo, {{ request.user }}!

@@ -1,70 +1,19 @@
 {% extends 'base.html' %}
+{% load filters %}
 
 {% block content %}
-<h5 class="page-header mt-3 mb-4">
-  Últimos Empréstimos
-</h5>
 
-<div class="row">
-{% for emprestimo in ultimos_emprestimos %}
-<div class="col">
-    <div class="card">
-        <div class="card-body">
-            <h6 class="card-subtitle mb-2 text-muted">
-              <small class="text-muted">{{ emprestimo.data_emprestimo|date }}</small>
-            </h6>
-            <h5 class="card-title">
-              {{ emprestimo.exemplar.titulo }}
-            </h5>
-            <h6 class="card-subtitle mb-2 text-muted">
-              {{ emprestimo.exemplar.biblioteca }}
-            </h6>
-            <a href="#" class="card-link">Detalhes</a>
-            <div class="float-right">
-                {% if emprestimo.is_ativo %}
-                  <span class="badge badge-primary">Ativo</span>
-                {% elif emprestimo.data_devolucao %}
-                  <span class="badge badge-success">Finalizado</span>
-                {% elif empresto.em_atraso %}
-                  <span class="badge badge-danger">Em Atraso</span>
-                {% endif %}
-            </div>
-        </div>
-    </div>
-</div>
-{% endfor %}
-</div>
+{% if request.user|has_group:'Administrador' %}
+    <h1>Menu adminstrador</h1>
+{% endif %}
 
-<h5 class="page-header mt-3 mb-4">
-  Empréstimos próximos do vencimento
-</h5>
+{% if request.user|has_group:'Bibliotecario' %}
+    {% include 'includes/listagem_exemplares.html' %}
+{% endif %}
 
-<div class="row">
-  {% for emprestimo in emprestimos_a_vencer %}
-  <div class="col">
-      <div class="card">
-          <div class="card-body">
-              <h6 class="card-subtitle mb-2 text-muted">
-                <span class="badge badge-danger">
-                  {{ emprestimo.data_prevista_devolucao|date }}
-                </span>
-              </h6>
-              <h5 class="card-title">
-                {{ emprestimo.exemplar.titulo }}
-              </h5>
-              <h6 class="card-subtitle mb-2 text-muted">
-                {{ emprestimo.exemplar.biblioteca }}
-              </h6>
-              <a href="#" class="card-link">Detalhes</a>
-              {% if emprestimo.is_ativo %}
-                <a href="{% url 'renovar_emprestimo' emprestimo.id %}" class="card-link">Renovar</a>
-              {% endif %}
-          </div>
-      </div>
-  </div>
-  {% endfor %}
-</div>
-
+{% if request.user|has_group:'Usuario' %}
+    {% include 'includes/listagem_emprestimos_usuario.html' %}
+{% endif %}
 {% endblock %}
 
 
